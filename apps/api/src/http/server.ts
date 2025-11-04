@@ -1,4 +1,5 @@
 import fastifyCors from '@fastify/cors';
+import fastifyJwt from '@fastify/jwt';
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUI from '@fastify/swagger-ui';
 import { fastify } from 'fastify';
@@ -25,13 +26,25 @@ app.register(fastifySwagger, {
       description: 'Fullstack SaaS RBAC app',
       version: '1.0.0',
     },
-    servers: [],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
   },
   transform: jsonSchemaTransform,
 });
 
 app.register(fastifySwaggerUI, {
   routePrefix: '/docs',
+});
+
+app.register(fastifyJwt, {
+  secret: 'superSecret',
 });
 
 app.register(routes);
