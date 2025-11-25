@@ -14,6 +14,7 @@ import {
 import { errorHandler } from './error-handler';
 import { authRoutes } from './routes/auth';
 import { orgsRoutes } from './routes/orgs';
+import { projectsRoutes } from './routes/projects';
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -53,6 +54,7 @@ app.register(fastifyJwt, {
 app.register(fastifyCors);
 
 app.register(authRoutes);
+app.register(projectsRoutes);
 app.register(orgsRoutes);
 
 app.listen({ port: env.SERVER_PORT }).then(() => {
