@@ -91,6 +91,15 @@ importers:
         specifier: 19.2.0
         version: 19.2.0(react@19.2.0)
     devDependencies:
+      '@saas/eslint-config':
+        specifier: workspace:*
+        version: link:../../config/eslint-config
+      '@saas/prettier':
+        specifier: workspace:*
+        version: link:../../config/prettier
+      '@saas/tsconfig':
+        specifier: workspace:*
+        version: link:../../config/typescript-config
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.1.17
