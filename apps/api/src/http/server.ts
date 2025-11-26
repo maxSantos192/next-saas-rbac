@@ -13,6 +13,7 @@ import {
 
 import { errorHandler } from './error-handler';
 import { authRoutes } from './routes/auth';
+import { membersRoutes } from './routes/members';
 import { orgsRoutes } from './routes/orgs';
 import { projectsRoutes } from './routes/projects';
 
@@ -54,6 +55,7 @@ app.register(fastifyJwt, {
 app.register(fastifyCors);
 
 app.register(authRoutes);
+app.register(membersRoutes);
 app.register(projectsRoutes);
 app.register(orgsRoutes);
 
