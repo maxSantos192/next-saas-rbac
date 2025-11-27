@@ -1,6 +1,8 @@
 'use server';
 
 import { HTTPError } from 'ky';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
 import { signInWithPassword } from '@/http/sign-in-with-password';
@@ -11,6 +13,7 @@ const signInSchema = z.object({
 });
 
 export async function signInWithEmailAndPassword(data: FormData) {
+  const cookieStore = await cookies();
   const result = signInSchema.safeParse(Object.fromEntries(data));
 
   if (!result.success) {
@@ -27,7 +30,10 @@ export async function signInWithEmailAndPassword(data: FormData) {
       password,
     });
 
-    console.log(token);
+    cookieStore.set('token', token, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7,
+    });
   } catch (err) {
     if (err instanceof HTTPError) {
       const { message } = await err.response.json();
@@ -40,5 +46,5 @@ export async function signInWithEmailAndPassword(data: FormData) {
     return { success: false, message: 'unexpected error.', errors: null };
   }
 
-  return { success: true, message: null, errors: null };
+  redirect('/');
 }
