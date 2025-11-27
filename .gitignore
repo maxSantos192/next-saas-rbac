@@ -2,8 +2,6 @@
 
 # Dependencies
 node_modules
-.pnp
-.pnp.js
 
 # Local env files
 .env
@@ -11,9 +9,6 @@ node_modules
 .env.development.local
 .env.test.local
 .env.production.local
-
-# Testing
-coverage
 
 # Turbo
 .turbo
@@ -26,13 +21,12 @@ coverage
 out/
 build
 dist
-
+apps/api/src/generated/prisma
 
 # Debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Misc
-.DS_Store
-*.pem
+# database
+.postgres_data
