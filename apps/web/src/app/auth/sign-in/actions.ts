@@ -12,7 +12,7 @@ const signInSchema = z.object({
   password: z.string().min(1, { message: 'Provide your password.' }),
 });
 
-export async function signInWithEmailAndPassword(data: FormData) {
+export async function signInWithEmailAndPasswordAction(data: FormData) {
   const cookieStore = await cookies();
   const result = signInSchema.safeParse(Object.fromEntries(data));
 
