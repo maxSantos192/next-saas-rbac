@@ -13,14 +13,14 @@ import {
 } from '../ui/dropdown-menu';
 
 export function ThemeSwitcher() {
-  const { resolvedTheme, setTheme } = useTheme();
+  const { setTheme } = useTheme();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
-          {resolvedTheme === 'light' && <Sun className="size-4" />}
-          {resolvedTheme === 'dark' && <Moon className="size-4" />}
+        <Button variant="ghost" size="icon" className="relative">
+          <Sun className="scale-100 dark:scale-0" />
+          <Moon className="absolute scale-0 dark:scale-100" />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
