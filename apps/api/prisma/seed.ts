@@ -51,7 +51,7 @@ async function seed() {
           data: [
             {
               name: faker.lorem.words(5),
-              slug: faker.lorem.words(5),
+              slug: faker.lorem.slug(5),
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
@@ -62,7 +62,7 @@ async function seed() {
             },
             {
               name: faker.lorem.words(5),
-              slug: faker.lorem.words(5),
+              slug: faker.lorem.slug(5),
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
@@ -73,7 +73,7 @@ async function seed() {
             },
             {
               name: faker.lorem.words(5),
-              slug: faker.lorem.words(5),
+              slug: faker.lorem.slug(5),
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
@@ -117,7 +117,7 @@ async function seed() {
           data: [
             {
               name: faker.lorem.words(5),
-              slug: faker.lorem.words(5),
+              slug: faker.lorem.slug(5),
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
@@ -128,7 +128,7 @@ async function seed() {
             },
             {
               name: faker.lorem.words(5),
-              slug: faker.lorem.words(5),
+              slug: faker.lorem.slug(5),
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
@@ -139,7 +139,7 @@ async function seed() {
             },
             {
               name: faker.lorem.words(5),
-              slug: faker.lorem.words(5),
+              slug: faker.lorem.slug(5),
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
@@ -183,7 +183,7 @@ async function seed() {
           data: [
             {
               name: faker.lorem.words(5),
-              slug: faker.lorem.words(5),
+              slug: faker.lorem.slug(5),
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
@@ -194,7 +194,7 @@ async function seed() {
             },
             {
               name: faker.lorem.words(5),
-              slug: faker.lorem.words(5),
+              slug: faker.lorem.slug(5),
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
@@ -205,7 +205,7 @@ async function seed() {
             },
             {
               name: faker.lorem.words(5),
-              slug: faker.lorem.words(5),
+              slug: faker.lorem.slug(5),
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
