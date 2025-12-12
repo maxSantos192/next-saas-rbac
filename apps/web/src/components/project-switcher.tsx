@@ -1,13 +1,14 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { ChevronsUpDown, PlusCircle } from 'lucide-react';
+import { ChevronsUpDown, Loader2, PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
+import { getInitials } from '@/helpers/get-initials';
 import { getProjects } from '@/http/get-projects';
 
-import { Avatar, AvatarFallback } from './ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,10 +18,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
+import { Skeleton } from './ui/skeleton';
 
 export function ProjectSwitcher() {
-  const { slug: orgSlug } = useParams<{
+  const { slug: orgSlug, project: projectSlug } = useParams<{
     slug: string;
+    project: string;
   }>();
 
   const { data, isLoading } = useQuery({
@@ -29,13 +32,43 @@ export function ProjectSwitcher() {
     enabled: !!orgSlug,
   });
 
-  console.log(data);
+  const currentProject =
+    data && projectSlug
+      ? data.projects.find((project) => project.slug === projectSlug)
+      : null;
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="focus-visible:ring-primary flex w-[168px] cursor-pointer items-center gap-2 rounded p-1 text-sm font-medium outline-none focus-visible:ring-2">
-        <span className="text-muted-foreground">Select project</span>
-        <ChevronsUpDown className="text-muted-foreground ml-auto size-4" />
+        {isLoading ? (
+          <>
+            <Skeleton className="size-5 shrink-0 rounded-full" />
+            <Skeleton className="h-5 w-full" />
+          </>
+        ) : (
+          <>
+            {currentProject ? (
+              <>
+                <Avatar className="size-5">
+                  {currentProject.avatarUrl && (
+                    <AvatarImage src={currentProject.avatarUrl} />
+                  )}
+                  <AvatarFallback>
+                    {getInitials(currentProject.name)}
+                  </AvatarFallback>
+                </Avatar>
+                <span className="truncate">{currentProject.name}</span>
+              </>
+            ) : (
+              <span className="text-muted-foreground">Select project</span>
+            )}
+          </>
+        )}
+        {isLoading ? (
+          <Loader2 className="text-muted-foreground ml-auto size-4 shrink-0 animate-spin" />
+        ) : (
+          <ChevronsUpDown className="text-muted-foreground ml-auto size-4 shrink-0" />
+        )}
       </DropdownMenuTrigger>
 
       <DropdownMenuContent
@@ -46,18 +79,24 @@ export function ProjectSwitcher() {
       >
         <DropdownMenuLabel>Projects</DropdownMenuLabel>
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
-            <Link href="">
-              <Avatar className="mr-2 size-5">
-                <AvatarFallback />
-              </Avatar>
-              <span className="line-clamp-1">Projeto teste</span>
-            </Link>
-          </DropdownMenuItem>
+          {data &&
+            data.projects.map((project) => (
+              <DropdownMenuItem key={project.id} asChild>
+                <Link href={`/org/${orgSlug}/project/${project.slug}`}>
+                  <Avatar className="size-5">
+                    {project.avatarUrl && (
+                      <AvatarImage src={project.avatarUrl} />
+                    )}
+                    <AvatarFallback>{getInitials(project.name)}</AvatarFallback>
+                  </Avatar>
+                  <span className="line-clamp-1">{project.name}</span>
+                </Link>
+              </DropdownMenuItem>
+            ))}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href="">
+          <Link href={`/org/${orgSlug}/create-project`}>
             <PlusCircle className="mr-2 size-5" />
             Create new
           </Link>
