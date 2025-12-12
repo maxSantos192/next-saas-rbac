@@ -6,6 +6,7 @@ import { ability } from '@/auth/auth';
 
 import { OrganizationSwitcher } from './organization-switcher';
 import { ProfileButton } from './profile-button';
+import { ProjectSwitcher } from './project-switcher';
 import { ThemeSwitcher } from './theme/theme-switcher';
 import { Separator } from './ui/separator';
 
@@ -21,7 +22,12 @@ export async function Header() {
 
         <OrganizationSwitcher />
 
-        {permissions?.can('get', 'Project') && <p>projetos</p>}
+        {permissions?.can('get', 'Project') && (
+          <>
+            <Slash className="-rotate-24 text-border size-3" />
+            <ProjectSwitcher />
+          </>
+        )}
       </div>
 
       <div className="flex h-5 items-center gap-4">
