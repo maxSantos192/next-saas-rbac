@@ -1,10 +1,11 @@
 'use server';
 
 import { HTTPError } from 'ky';
-import { revalidateTag } from 'next/cache';
 import { z } from 'zod';
 
+import { getCurrentOrg } from '@/auth/auth';
 import { createOrganization } from '@/http/create-organization';
+import { updateOrganization } from '@/http/update-organization';
 
 const organizationSchema = z
   .object({
@@ -66,8 +67,6 @@ export async function createOrganizationAction(data: FormData) {
       domain,
       shouldAttachUsersByDomain,
     });
-
-    revalidateTag('organizations', 'default');
   } catch (err) {
     if (err instanceof HTTPError) {
       const { message } = await err.response.json();
@@ -76,6 +75,42 @@ export async function createOrganizationAction(data: FormData) {
     }
 
     return { success: false, message: 'unexpected error.', errors: null };
+  }
+
+  return {
+    success: true,
+    message: 'Successfully saved the organization.',
+    errors: null,
+  };
+}
+
+export async function updateOrganizationAction(data: FormData) {
+  const result = organizationSchema.safeParse(Object.fromEntries(data));
+  const currentOrg = await getCurrentOrg();
+
+  if (!result.success) {
+    const errors = result.error.flatten((insue) => insue.message).fieldErrors;
+
+    return { success: false, message: null, errors };
+  }
+
+  const { name, domain, shouldAttachUsersByDomain } = result.data;
+
+  try {
+    await updateOrganization({
+      org: currentOrg!,
+      name,
+      domain,
+      shouldAttachUsersByDomain,
+    });
+  } catch (err) {
+    if (err instanceof HTTPError) {
+      const { message } = await err.response.json();
+
+      return { success: false, message, errors: null };
+    }
+
+    return { success: false, message: 'errro aqui 1.', errors: null };
   }
 
   return {

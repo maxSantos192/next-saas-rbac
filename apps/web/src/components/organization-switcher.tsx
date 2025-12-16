@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { getCurrentOrg } from '@/auth/auth';
 import { getInitials } from '@/helpers/get-initials';
-import { getOrganizations } from '@/http/get-organization';
+import { getOrganizations } from '@/http/get-organizations';
 
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import {
