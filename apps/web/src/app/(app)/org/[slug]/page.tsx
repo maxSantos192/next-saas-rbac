@@ -1,9 +1,7 @@
-import { Header } from '@/components/header';
-
 export default function Projects() {
   return (
-    <div className="py-4">
-      <Header />
+    <div className="space-y4">
+      <h1 className="text-2xl font-bold">Projects</h1>
     </div>
   );
 }
