@@ -5,7 +5,6 @@ import { Loader2, XCircle } from 'lucide-react';
 
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -42,16 +41,18 @@ export function ShutdownOrganizationButton() {
         </AlertDialogHeader>
 
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction asChild>
-            <Button
-              variant="destructive"
-              onClick={() => shutdownOrganization()}
-              disabled={isPending}
-            >
-              {isPending ? <Loader2 className="size-4" /> : 'Shutdown'}
-            </Button>
-          </AlertDialogAction>
+          <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
+          <Button
+            variant="destructive"
+            onClick={() => shutdownOrganization()}
+            disabled={isPending}
+          >
+            {isPending ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              'Shutdown'
+            )}
+          </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
