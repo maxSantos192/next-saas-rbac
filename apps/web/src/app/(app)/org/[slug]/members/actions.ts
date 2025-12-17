@@ -3,7 +3,7 @@
 import { getCurrentOrg } from '@/auth/auth';
 import { removeMember } from '@/http/remove-member';
 
-export async function removerMemberAction(memberId: string) {
+export async function removeMemberAction(memberId: string) {
   const currentOrg = await getCurrentOrg();
 
   await removeMember({

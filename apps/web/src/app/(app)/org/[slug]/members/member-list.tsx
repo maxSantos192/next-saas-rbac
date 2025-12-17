@@ -9,7 +9,7 @@ import { getMembers } from '@/http/get-members';
 import { getMembership } from '@/http/get-membership';
 import { getOrganization } from '@/http/get-organization';
 
-import { removerMemberAction } from './actions';
+import { RemoveMemberButton } from './remove-member-button';
 
 export async function MemberList() {
   const currentOrg = await getCurrentOrg();
@@ -74,20 +74,13 @@ export async function MemberList() {
                       </Button>
                     )}
                     {canDeleteUser && (
-                      <form action={removerMemberAction.bind(null, member.id)}>
-                        <Button
-                          type="submit"
-                          size="sm"
-                          variant="destructive"
-                          disabled={
-                            member.userId === membership.userId ||
-                            member.userId === organization.ownerId
-                          }
-                        >
-                          <UserMinus className="size-4" />
-                          Remove
-                        </Button>
-                      </form>
+                      <RemoveMemberButton
+                        memberId={member.id}
+                        disabled={
+                          member.userId === membership.userId ||
+                          member.userId === organization.ownerId
+                        }
+                      />
                     )}
                   </div>
                 </TableCell>
