@@ -72,11 +72,12 @@ export async function MemberList() {
                 </TableCell>
                 <TableCell className="py-2.5">
                   <div className="flex items-center justify-end gap-2">
-                    {canTransferOwnership && (
-                      <TransferOwnershipButton
-                        transferToUserId={member.userId}
-                      />
-                    )}
+                    {canTransferOwnership &&
+                      member.userId !== organization.ownerId && (
+                        <TransferOwnershipButton
+                          transferToUserId={member.userId}
+                        />
+                      )}
 
                     <UpdateMemberRoleSelect
                       memberId={member.id}
