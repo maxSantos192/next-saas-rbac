@@ -1,8 +1,8 @@
-import { ArrowLeftRight, Crown, UserMinus } from 'lucide-react';
+import { organizationSchema } from '@saas/auth';
+import { Crown } from 'lucide-react';
 
 import { ability, getCurrentOrg } from '@/auth/auth';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import { getInitials } from '@/helpers/get-initials';
 import { getMembers } from '@/http/get-members';
@@ -10,24 +10,27 @@ import { getMembership } from '@/http/get-membership';
 import { getOrganization } from '@/http/get-organization';
 
 import { RemoveMemberButton } from './remove-member-button';
+import { TransferOwnershipButton } from './transfer-ownership-button';
 import { UpdateMemberRoleSelect } from './update-member-role-select';
 
 export async function MemberList() {
   const currentOrg = await getCurrentOrg();
   const permissions = await ability();
 
-  const canTransferOwnership = permissions?.can(
-    'transfer_ownership',
-    'Organization'
-  );
-  const canDeleteUser = permissions?.can('delete', 'User');
-  const cannotUpdateMember = permissions?.cannot('update', 'User');
-
   const [{ members }, { membership }, { organization }] = await Promise.all([
     getMembers(currentOrg!),
     getMembership(currentOrg!),
     getOrganization(currentOrg!),
   ]);
+
+  const authOrganization = organizationSchema.parse(organization);
+
+  const canTransferOwnership = permissions?.can(
+    'transfer_ownership',
+    authOrganization
+  );
+  const canDeleteUser = permissions?.can('delete', 'User');
+  const cannotUpdateMember = permissions?.cannot('update', 'User');
 
   return (
     <div className="space-y-2">
@@ -70,10 +73,9 @@ export async function MemberList() {
                 <TableCell className="py-2.5">
                   <div className="flex items-center justify-end gap-2">
                     {canTransferOwnership && (
-                      <Button size="sm" variant="ghost">
-                        <ArrowLeftRight className="size-4" />
-                        Transfer ownership
-                      </Button>
+                      <TransferOwnershipButton
+                        transferToUserId={member.userId}
+                      />
                     )}
 
                     <UpdateMemberRoleSelect

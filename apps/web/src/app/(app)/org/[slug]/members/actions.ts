@@ -4,6 +4,7 @@ import { Role } from '@saas/auth';
 
 import { getCurrentOrg } from '@/auth/auth';
 import { removeMember } from '@/http/remove-member';
+import { transferOrganization } from '@/http/transfer-organization';
 import { updateMember } from '@/http/update-member';
 
 interface UpdateMemberActionProps {
@@ -30,5 +31,14 @@ export async function updateMemberAction({
     org: currentOrg!,
     memberId,
     role,
+  });
+}
+
+export async function transferOwnershipAction(transferToUserId: string) {
+  const currentOrg = await getCurrentOrg();
+
+  await transferOrganization({
+    org: currentOrg!,
+    transferToUserId,
   });
 }
