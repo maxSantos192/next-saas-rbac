@@ -13,7 +13,7 @@ import {
   createOrganizationAction,
   OrganizationSchema,
   updateOrganizationAction,
-} from './action';
+} from './actions';
 
 interface OrganizationFormProps {
   isUpdating?: boolean;
