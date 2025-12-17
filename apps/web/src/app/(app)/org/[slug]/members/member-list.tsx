@@ -1,0 +1,101 @@
+import { ArrowLeftRight, Crown, UserMinus } from 'lucide-react';
+
+import { ability, getCurrentOrg } from '@/auth/auth';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
+import { getInitials } from '@/helpers/get-initials';
+import { getMembers } from '@/http/get-members';
+import { getMembership } from '@/http/get-membership';
+import { getOrganization } from '@/http/get-organization';
+
+import { removerMemberAction } from './actions';
+
+export async function MemberList() {
+  const currentOrg = await getCurrentOrg();
+  const permissions = await ability();
+
+  const canTransferOwnership = permissions?.can(
+    'transfer_ownership',
+    'Organization'
+  );
+  const canDeleteUser = permissions?.can('delete', 'User');
+
+  const [{ members }, { membership }, { organization }] = await Promise.all([
+    getMembers(currentOrg!),
+    getMembership(currentOrg!),
+    getOrganization(currentOrg!),
+  ]);
+
+  return (
+    <div className="space-y-2">
+      <h2 className="text-lg font-semibold">Members</h2>
+
+      <div className="rounded border">
+        <Table>
+          <TableBody>
+            {members.map((member) => (
+              <TableRow key={member.id}>
+                <TableCell className="py-2.5" style={{ width: 48 }}>
+                  <Avatar>
+                    <AvatarImage src={member.avatarUrl ?? undefined} />
+                    <AvatarFallback>
+                      {getInitials(member.name ?? 'U')}
+                    </AvatarFallback>
+                  </Avatar>
+                </TableCell>
+                <TableCell className="py-2.5">
+                  <div className="flex flex-col">
+                    <span className="inline-flex items-center gap-2 font-medium">
+                      {member.name}
+                      {member.userId === membership.userId && (
+                        <span className="text-muted-foreground text-xs">
+                          (You)
+                        </span>
+                      )}
+                      {organization.ownerId === member.userId && (
+                        <span className="text-muted-foreground inline-flex items-center gap-1 text-xs">
+                          <Crown className="size-3" />
+                          Owner
+                        </span>
+                      )}
+                    </span>
+                    <span className="text-muted-foreground text-xs">
+                      {member.email}
+                    </span>
+                  </div>
+                </TableCell>
+                <TableCell className="py-2.5">
+                  <div className="flex items-center justify-end gap-2">
+                    {canTransferOwnership && (
+                      <Button size="sm" variant="ghost">
+                        <ArrowLeftRight className="size-4" />
+                        Transfer ownership
+                      </Button>
+                    )}
+                    {canDeleteUser && (
+                      <form action={removerMemberAction.bind(null, member.id)}>
+                        <Button
+                          type="submit"
+                          size="sm"
+                          variant="destructive"
+                          disabled={
+                            member.userId === membership.userId ||
+                            member.userId === organization.ownerId
+                          }
+                        >
+                          <UserMinus className="size-4" />
+                          Remove
+                        </Button>
+                      </form>
+                    )}
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  );
+}
