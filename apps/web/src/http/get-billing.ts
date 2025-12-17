@@ -1,9 +1,5 @@
 import { api } from './api-client';
 
-interface GetBillingRequest {
-  org: string;
-}
-
 interface GetBillingResponse {
   billing: {
     seats: {
@@ -20,7 +16,7 @@ interface GetBillingResponse {
   };
 }
 
-export async function getBilling({ org }: GetBillingRequest) {
+export async function getBilling(org: string) {
   const response = await api
     .get(`organizations/${org}/billing`)
     .json<GetBillingResponse>();

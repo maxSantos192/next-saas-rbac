@@ -21,7 +21,7 @@ import { getBilling } from '@/http/get-billing';
 
 export async function Billing() {
   const currentOrg = await getCurrentOrg();
-  const { billing } = await getBilling({ org: currentOrg! });
+  const { billing } = await getBilling(currentOrg!);
 
   return (
     <>
