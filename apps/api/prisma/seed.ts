@@ -6,7 +6,12 @@ import { PrismaClient } from '../src/generated/prisma/client';
 const prisma = new PrismaClient();
 
 async function seed() {
+  await prisma.account.deleteMany();
+  await prisma.invite.deleteMany();
+  await prisma.member.deleteMany();
   await prisma.organization.deleteMany();
+  await prisma.project.deleteMany();
+  await prisma.token.deleteMany();
   await prisma.user.deleteMany();
 
   const passwordHash = await hash('123456', 1);
