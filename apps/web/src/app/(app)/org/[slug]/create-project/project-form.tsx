@@ -26,50 +26,48 @@ export default function ProjectForm() {
   );
 
   return (
-    <div className="space-y-6">
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {success === false && message && (
-          <Alert variant="destructive">
-            <AlertTriangle className="size-4" />
-            <AlertTitle>Save project failed!</AlertTitle>
-            <AlertDescription>{message}</AlertDescription>
-          </Alert>
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {success === false && message && (
+        <Alert variant="destructive">
+          <AlertTriangle className="size-4" />
+          <AlertTitle>Save project failed!</AlertTitle>
+          <AlertDescription>{message}</AlertDescription>
+        </Alert>
+      )}
+
+      {success === true && message && (
+        <Alert>
+          <AlertTriangle className="size-4" />
+          <AlertTitle>Success!</AlertTitle>
+          <AlertDescription>
+            <p>{message}</p>
+          </AlertDescription>
+        </Alert>
+      )}
+
+      <div className="space-y-1">
+        <Label htmlFor="name">Project name</Label>
+        <Input name="name" id="name" />
+        {errors?.name && (
+          <p className="text-xs font-medium text-red-500 dark:text-red-400">
+            {errors.name[0]}
+          </p>
         )}
+      </div>
 
-        {success === true && message && (
-          <Alert>
-            <AlertTriangle className="size-4" />
-            <AlertTitle>Success!</AlertTitle>
-            <AlertDescription>
-              <p>{message}</p>
-            </AlertDescription>
-          </Alert>
+      <div className="space-y-1">
+        <Label htmlFor="description">Description</Label>
+        <Textarea name="description" id="description" />
+        {errors?.description && (
+          <p className="text-xs font-medium text-red-500 dark:text-red-400">
+            {errors.description[0]}
+          </p>
         )}
+      </div>
 
-        <div className="space-y-1">
-          <Label htmlFor="name">Project name</Label>
-          <Input name="name" id="name" />
-          {errors?.name && (
-            <p className="text-xs font-medium text-red-500 dark:text-red-400">
-              {errors.name[0]}
-            </p>
-          )}
-        </div>
-
-        <div className="space-y-1">
-          <Label htmlFor="description">Description</Label>
-          <Textarea name="description" id="description" />
-          {errors?.description && (
-            <p className="text-xs font-medium text-red-500 dark:text-red-400">
-              {errors.description[0]}
-            </p>
-          )}
-        </div>
-
-        <Button type="submit" className="w-full" disabled={isPending}>
-          {isPending ? <Loader2 className="animate-spin" /> : 'Save project'}
-        </Button>
-      </form>
-    </div>
+      <Button type="submit" className="w-full" disabled={isPending}>
+        {isPending ? <Loader2 className="animate-spin" /> : 'Save project'}
+      </Button>
+    </form>
   );
 }
