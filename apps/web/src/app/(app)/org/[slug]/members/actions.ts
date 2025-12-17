@@ -4,6 +4,7 @@ import { Role } from '@saas/auth';
 
 import { getCurrentOrg } from '@/auth/auth';
 import { removeMember } from '@/http/remove-member';
+import { revokeInvite } from '@/http/revoke-invite';
 import { transferOrganization } from '@/http/transfer-organization';
 import { updateMember } from '@/http/update-member';
 
@@ -40,5 +41,14 @@ export async function transferOwnershipAction(transferToUserId: string) {
   await transferOrganization({
     org: currentOrg!,
     transferToUserId,
+  });
+}
+
+export async function revokeInviteAction(inviteId: string) {
+  const currentOrg = await getCurrentOrg();
+
+  await revokeInvite({
+    org: currentOrg!,
+    inviteId,
   });
 }
