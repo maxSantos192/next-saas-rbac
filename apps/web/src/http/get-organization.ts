@@ -1,9 +1,5 @@
 import { api } from './api-client';
 
-interface GetOrganizationRequest {
-  org: string;
-}
-
 interface GetOrganizationResponse {
   organization: {
     id: string;
@@ -18,7 +14,7 @@ interface GetOrganizationResponse {
   };
 }
 
-export async function getOrganization({ org }: GetOrganizationRequest) {
+export async function getOrganization(org: string) {
   const result = await api
     .get(`organization/${org}`)
     .json<GetOrganizationResponse>();

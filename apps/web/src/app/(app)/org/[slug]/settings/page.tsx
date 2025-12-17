@@ -20,7 +20,7 @@ export default async function Settings() {
   const canGetBilling = permissions?.can('get', 'Billing');
   const canShutdownOrganization = permissions?.can('delete', 'Organization');
 
-  const { organization } = await getOrganization({ org: currentOrg! });
+  const { organization } = await getOrganization(currentOrg!);
 
   return (
     <div className="space-y-4">
