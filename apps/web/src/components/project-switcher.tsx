@@ -50,11 +50,9 @@ export function ProjectSwitcher() {
             {currentProject ? (
               <>
                 <Avatar className="size-5">
-                  {currentProject.avatarUrl && (
-                    <AvatarImage src={currentProject.avatarUrl} />
-                  )}
+                  <AvatarImage src={currentProject.avatarUrl ?? undefined} />
                   <AvatarFallback>
-                    {getInitials(currentProject.name)}
+                    {getInitials(currentProject.name ?? 'U')}
                   </AvatarFallback>
                 </Avatar>
                 <span className="truncate">{currentProject.name}</span>
@@ -84,10 +82,10 @@ export function ProjectSwitcher() {
               <DropdownMenuItem key={project.id} asChild>
                 <Link href={`/org/${orgSlug}/project/${project.slug}`}>
                   <Avatar className="size-5">
-                    {project.avatarUrl && (
-                      <AvatarImage src={project.avatarUrl} />
-                    )}
-                    <AvatarFallback>{getInitials(project.name)}</AvatarFallback>
+                    <AvatarImage src={project.avatarUrl ?? undefined} />
+                    <AvatarFallback>
+                      {getInitials(project.name ?? 'U')}
+                    </AvatarFallback>
                   </Avatar>
                   <span className="line-clamp-1">{project.name}</span>
                 </Link>

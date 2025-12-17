@@ -30,9 +30,7 @@ export async function OrganizationSwitcher() {
         {currentOrganization ? (
           <>
             <Avatar className="size-5">
-              {currentOrganization.avatarUrl && (
-                <AvatarImage src={currentOrganization.avatarUrl} />
-              )}
+              <AvatarImage src={currentOrganization.avatarUrl ?? undefined} />
               <AvatarFallback>
                 {getInitials(currentOrganization.name)}
               </AvatarFallback>
@@ -58,9 +56,7 @@ export async function OrganizationSwitcher() {
               <DropdownMenuItem key={organization.id} asChild>
                 <Link href={`/org/${organization.slug}`}>
                   <Avatar className="size-5">
-                    {organization.avatarUrl && (
-                      <AvatarImage src={organization.avatarUrl} />
-                    )}
+                    <AvatarImage src={organization.avatarUrl ?? undefined} />
                     <AvatarFallback>
                       {getInitials(organization.name)}
                     </AvatarFallback>

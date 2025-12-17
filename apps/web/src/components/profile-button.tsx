@@ -24,10 +24,8 @@ export async function ProfileButton() {
           <span className="text-muted-foreground text-xs">{user.email}</span>
         </div>
         <Avatar>
-          {user.avatarUrl && <AvatarImage src={user.avatarUrl} />}
-          {user.name && (
-            <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
-          )}
+          <AvatarImage src={user.avatarUrl ?? undefined} />
+          <AvatarFallback>{getInitials(user.name ?? 'U')}</AvatarFallback>
         </Avatar>
         <ChevronDown className="text-muted-foreground size-4" />
       </DropdownMenuTrigger>
