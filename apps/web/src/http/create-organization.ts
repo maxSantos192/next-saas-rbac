@@ -13,13 +13,11 @@ export async function createOrganization({
   domain,
   shouldAttachUsersByDomain,
 }: CreateOrganizationRequest): Promise<CreateOrganizationResponse> {
-  await api
-    .post('organization', {
-      json: {
-        name,
-        domain,
-        shouldAttachUsersByDomain,
-      },
-    })
-    .json<CreateOrganizationResponse>();
+  await api.post('organization', {
+    json: {
+      name,
+      domain,
+      shouldAttachUsersByDomain,
+    },
+  });
 }
