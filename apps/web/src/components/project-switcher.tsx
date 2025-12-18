@@ -44,6 +44,7 @@ export function ProjectSwitcher() {
           <>
             <Skeleton className="size-5 shrink-0 rounded-full" />
             <Skeleton className="h-5 w-full" />
+            <Loader2 className="text-muted-foreground ml-auto size-4 shrink-0 animate-spin" />
           </>
         ) : (
           <>
@@ -60,12 +61,8 @@ export function ProjectSwitcher() {
             ) : (
               <span className="text-muted-foreground">Select project</span>
             )}
+            <ChevronsUpDown className="text-muted-foreground ml-auto size-4 shrink-0" />
           </>
-        )}
-        {isLoading ? (
-          <Loader2 className="text-muted-foreground ml-auto size-4 shrink-0 animate-spin" />
-        ) : (
-          <ChevronsUpDown className="text-muted-foreground ml-auto size-4 shrink-0" />
         )}
       </DropdownMenuTrigger>
 
