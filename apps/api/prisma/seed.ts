@@ -6,7 +6,12 @@ import { PrismaClient } from '../src/generated/prisma/client';
 const prisma = new PrismaClient();
 
 async function seed() {
+  await prisma.account.deleteMany();
+  await prisma.invite.deleteMany();
+  await prisma.member.deleteMany();
   await prisma.organization.deleteMany();
+  await prisma.project.deleteMany();
+  await prisma.token.deleteMany();
   await prisma.user.deleteMany();
 
   const passwordHash = await hash('123456', 1);
@@ -51,7 +56,7 @@ async function seed() {
           data: [
             {
               name: faker.lorem.words(5),
-              slug: faker.lorem.words(5),
+              slug: faker.lorem.slug(5),
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
@@ -62,7 +67,7 @@ async function seed() {
             },
             {
               name: faker.lorem.words(5),
-              slug: faker.lorem.words(5),
+              slug: faker.lorem.slug(5),
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
@@ -73,7 +78,7 @@ async function seed() {
             },
             {
               name: faker.lorem.words(5),
-              slug: faker.lorem.words(5),
+              slug: faker.lorem.slug(5),
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
@@ -117,7 +122,7 @@ async function seed() {
           data: [
             {
               name: faker.lorem.words(5),
-              slug: faker.lorem.words(5),
+              slug: faker.lorem.slug(5),
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
@@ -128,7 +133,7 @@ async function seed() {
             },
             {
               name: faker.lorem.words(5),
-              slug: faker.lorem.words(5),
+              slug: faker.lorem.slug(5),
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
@@ -139,7 +144,7 @@ async function seed() {
             },
             {
               name: faker.lorem.words(5),
-              slug: faker.lorem.words(5),
+              slug: faker.lorem.slug(5),
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
@@ -183,7 +188,7 @@ async function seed() {
           data: [
             {
               name: faker.lorem.words(5),
-              slug: faker.lorem.words(5),
+              slug: faker.lorem.slug(5),
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
@@ -194,7 +199,7 @@ async function seed() {
             },
             {
               name: faker.lorem.words(5),
-              slug: faker.lorem.words(5),
+              slug: faker.lorem.slug(5),
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
@@ -205,7 +210,7 @@ async function seed() {
             },
             {
               name: faker.lorem.words(5),
-              slug: faker.lorem.words(5),
+              slug: faker.lorem.slug(5),
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([

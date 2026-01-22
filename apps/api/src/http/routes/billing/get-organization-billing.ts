@@ -41,7 +41,7 @@ export async function getOrganizationBilling(app: FastifyInstance) {
           },
         },
       },
-      async (request, reply) => {
+      async (request) => {
         const { slug } = request.params;
         const userId = await request.getCurrentUserId();
         const { organization, membership } =
@@ -79,7 +79,7 @@ export async function getOrganizationBilling(app: FastifyInstance) {
             projects: {
               amount: amountOfProjects,
               unit: 20,
-              price: amountOfMembers * 20,
+              price: amountOfProjects * 20,
             },
             total: amountOfMembers * 10 + amountOfProjects * 20,
           },
